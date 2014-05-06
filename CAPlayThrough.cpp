@@ -114,6 +114,7 @@ private:
 	Float64 mInToOutSampleOffset;
     
     double  mAmplifier;
+ 
 };
 
 
@@ -421,7 +422,7 @@ OSStatus CAPlayThrough::SetupAUHAL(AudioDeviceID in)
 	
 	//Every Component has a subType, which will give a clearer picture
 	//of what this components function will be.
-	desc.componentSubType = kAudioUnitSubType_HALOutput;
+    desc.componentSubType = kAudioUnitSubType_HALOutput;
 	
 	//all Audio Units in AUComponent.h must use 
 	//"kAudioUnitManufacturer_Apple" as the Manufacturer
@@ -770,6 +771,9 @@ void CAPlayThroughHost::CreatePlayThrough(AudioDeviceID input, AudioDeviceID out
     StreamListenerQueue = dispatch_queue_create("com.CAPlayThough.StreamListenerQueue", DISPATCH_QUEUE_SERIAL);
     //if (StreamListenerQueue) dispatch_set_context(StreamListenerQueue, this);
 	AddDeviceListeners(input);
+    
+    AddDevicePlugInListeners();
+    
 }
 
 void CAPlayThroughHost::DeletePlayThrough()
@@ -914,3 +918,94 @@ void CAPlayThroughHost::RemoveDeviceListeners(AudioDeviceID input)
         if (NULL != streams) free(streams);
 	}
 }
+
+bool CAPlayThroughHost::CurDeviceisSpeaker()const{
+    
+    AudioDeviceID defaultDevice = 0;
+    
+    UInt32 defaultSize = sizeof(AudioDeviceID);
+    
+    const AudioObjectPropertyAddress defaultAddr = {
+        kAudioHardwarePropertyDefaultOutputDevice,
+        kAudioObjectPropertyScopeGlobal,
+        kAudioObjectPropertyElementMaster
+    };
+    
+    AudioObjectGetPropertyData(kAudioObjectSystemObject, &defaultAddr, 0, NULL, &defaultSize, &defaultDevice);
+    
+    
+    AudioObjectPropertyAddress sourceAddr;
+    sourceAddr.mSelector = kAudioDevicePropertyDataSource;
+    sourceAddr.mScope = kAudioDevicePropertyScopeOutput;
+    sourceAddr.mElement = kAudioObjectPropertyElementMaster;
+    
+    UInt32 dataSourceId = 0;
+    UInt32 dataSourceIdSize = sizeof(UInt32);
+    AudioObjectGetPropertyData(defaultDevice, &sourceAddr, 0, NULL, &dataSourceIdSize, &dataSourceId);
+    
+    if (dataSourceId == 'ispk') { //'hdpn' //耳机
+        //扬声器
+        return true;
+    }
+    
+    return false;
+}
+
+
+extern void g_HandleNoiceSound(bool isFirst = true);
+
+static AudioDeviceID g_defaultDevice = 0;
+void CAPlayThroughHost::AddDevicePlugInListeners()
+{
+    UInt32 defaultSize = sizeof(AudioDeviceID);
+    
+    const AudioObjectPropertyAddress defaultAddr = {
+        kAudioHardwarePropertyDefaultOutputDevice,
+        kAudioObjectPropertyScopeGlobal,
+        kAudioObjectPropertyElementMaster
+    };
+    
+    AudioObjectGetPropertyData(kAudioObjectSystemObject, &defaultAddr, 0, NULL, &defaultSize, &g_defaultDevice);
+    
+    
+    AudioObjectPropertyAddress sourceAddr;
+    sourceAddr.mSelector = kAudioDevicePropertyDataSource;
+    sourceAddr.mScope = kAudioDevicePropertyScopeOutput;
+    sourceAddr.mElement = kAudioObjectPropertyElementMaster;
+    
+    UInt32 dataSourceId = 0;
+    UInt32 dataSourceIdSize = sizeof(UInt32);
+    AudioObjectGetPropertyData(g_defaultDevice, &sourceAddr, 0, NULL, &dataSourceIdSize, &dataSourceId);
+    
+    //监听接口是否已经变化了
+    AudioObjectAddPropertyListenerBlock(g_defaultDevice, &sourceAddr, dispatch_get_global_queue(0, 0), ^(UInt32 inNumberAddresses, const AudioObjectPropertyAddress *inAddresses) {
+        
+        
+        UInt32 mdataSourceId = 0;
+        UInt32 mdataSourceIdSize = sizeof(UInt32);
+        AudioObjectGetPropertyData(g_defaultDevice, &sourceAddr, 0, NULL, &mdataSourceIdSize, &mdataSourceId);
+        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+        
+            if(this->IsRunning())
+                this->Stop();
+            printf("the dataSourceId = %d ;\t%d ;  \t  %d \n",(int)mdataSourceId,'ispk','hdpn');
+            dispatch_async(dispatch_get_main_queue(), ^{
+                this->Start();
+                
+                if (mdataSourceId == 'ispk') {//扬声器
+                    // Recognized as internal speakers
+                    g_HandleNoiceSound(true);
+                } else if (mdataSourceId == 'hdpn') {//耳机
+                    // Recognized as headphones
+                }
+            });
+        
+//        });
+        
+    });
+    
+}
+
+
+

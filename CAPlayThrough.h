@@ -84,6 +84,10 @@ public:
 	OSStatus	Stop();
 	Boolean		IsRunning();    
     void        SetAmplifier(double curVal);
+    
+    void        AddDevicePlugInListeners();
+    bool        CurDeviceisSpeaker()const;
+    
 private:
     
     CAPlayThrough* GetPlayThrough() { return mPlayThrough; }
@@ -104,6 +108,7 @@ private:
     
 private:
 	CAPlayThrough *mPlayThrough;
+    
 };
 
 #endif //__CAPlayThrough_H__

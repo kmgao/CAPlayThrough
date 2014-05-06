@@ -54,7 +54,6 @@ static void	BuildDeviceMenu(AudioDeviceList *devlist, NSPopUpButton *menu, Audio
 {
 	mInputDeviceList = new AudioDeviceList(true);
 	mOutputDeviceList = new AudioDeviceList(false);
-//    g_HandleNoiceSound(true);
 	return self;
 }
 
@@ -64,7 +63,6 @@ static void	BuildDeviceMenu(AudioDeviceList *devlist, NSPopUpButton *menu, Audio
     [lblAmplifier setStringValue:strAmp];
     if ( playThroughHost ){
         playThroughHost->SetAmplifier(curVal);
-        g_HandleNoiceSound();
     }
 }
 
@@ -118,11 +116,21 @@ static void	BuildDeviceMenu(AudioDeviceList *devlist, NSPopUpButton *menu, Audio
 {
 	if( !playThroughHost->IsRunning())
 	{
+//        if(playThroughHost->CurDeviceisSpeaker()){
+//            g_HandleNoiceSound(true);
+//        }
+        
+//       playThroughHost->voiceProcessHandle(true);
 		[mStartButton setTitle:@" Press to Stop"];
 		playThroughHost->Start();
+        
+        if(playThroughHost->CurDeviceisSpeaker()){
+            g_HandleNoiceSound(true);
+        }
+        
+        
 		[mProgress setHidden: NO];
 		[mProgress startAnimation:sender];
-        g_HandleNoiceSound();
 	}
 }
 
@@ -209,6 +217,9 @@ static void	BuildDeviceMenu(AudioDeviceList *devlist, NSPopUpButton *menu, Audio
 @end
 
 
+
+static AudioComponent g_inputComponent = NULL;
+
 void g_HandleNoiceSound(bool isFirst )
 {
     AudioComponentInstance      mAudioUnit;
@@ -221,25 +232,27 @@ void g_HandleNoiceSound(bool isFirst )
     acd.componentFlags = 0;
     acd.componentFlagsMask = 0;
     
-    AudioComponent inputComponent = AudioComponentFindNext(NULL, &acd);
+    AudioComponent inputComponent = AudioComponentFindNext(g_inputComponent, &acd);
     AudioComponentInstanceNew(inputComponent, &mAudioUnit);
+    g_inputComponent = inputComponent;
     
     /* Enable input */
     UInt32 enable = 1;
     ostatus = AudioUnitSetProperty(mAudioUnit,
 	                               kAudioOutputUnitProperty_EnableIO,
 	                               kAudioUnitScope_Input,
-	                               0,
+	                               1,
 	                               &enable,
 	                               sizeof(enable));
     if(ostatus != noErr) {
         NSLog(@"AudioUnitSetProperty  kAudioOutputUnitProperty_EnableIO faild>>>>1111111");
     }
+    enable = 1;
 	/* Enable output */
 	ostatus = AudioUnitSetProperty(mAudioUnit,
 	                               kAudioOutputUnitProperty_EnableIO,
 	                               kAudioUnitScope_Output,
-	                               1,
+	                               0,
 	                               &enable,
 	                               sizeof(enable));
     if(ostatus != noErr) {
@@ -258,34 +271,34 @@ void g_HandleNoiceSound(bool isFirst )
     }
 
     
-    AudioStreamBasicDescription deviceFormat;
-	UInt32 size;
+//    AudioStreamBasicDescription deviceFormat;
+//	UInt32 size;
     
 	/*
 	 * Keep the sample rate from the device, otherwise we will confuse
 	 * AUHAL
 	 */
-	size = sizeof(AudioStreamBasicDescription);
-	ostatus = AudioUnitGetProperty(mAudioUnit,
-                                   kAudioUnitProperty_StreamFormat,
-                                   kAudioUnitScope_Input,
-                                   1,
-                                   &deviceFormat,
-                                   &size);
-	if (ostatus != noErr) {
-	    return NSLog(@"AudioUnitSetProperty  kAudioUnitProperty_StreamFormat faild>>>>444444444");
-	}
-    
-    size = sizeof(AudioStreamBasicDescription);
-	ostatus = AudioUnitGetProperty (mAudioUnit,
-                                    kAudioUnitProperty_StreamFormat,
-                                    kAudioUnitScope_Output,
-                                    1,
-                                    &deviceFormat,
-                                    &size);
-    if (ostatus != noErr) {
-	    return NSLog(@"AudioUnitSetProperty  kAudioUnitProperty_StreamFormat faild>>>>555555555");
-	}
+//	size = sizeof(AudioStreamBasicDescription);
+//	ostatus = AudioUnitGetProperty(mAudioUnit,
+//                                   kAudioUnitProperty_StreamFormat,
+//                                   kAudioUnitScope_Input,
+//                                   1,
+//                                   &deviceFormat,
+//                                   &size);
+//	if (ostatus != noErr) {
+//	    return NSLog(@"AudioUnitSetProperty  kAudioUnitProperty_StreamFormat faild>>>>444444444");
+//	}
+//    
+//    size = sizeof(AudioStreamBasicDescription);
+//	ostatus = AudioUnitGetProperty (mAudioUnit,
+//                                    kAudioUnitProperty_StreamFormat,
+//                                    kAudioUnitScope_Output,
+//                                    1,
+//                                    &deviceFormat,
+//                                    &size);
+//    if (ostatus != noErr) {
+//	    return NSLog(@"AudioUnitSetProperty  kAudioUnitProperty_StreamFormat faild>>>>555555555");
+//	}
     
     //AudioUnitInitialize
     if(isFirst){

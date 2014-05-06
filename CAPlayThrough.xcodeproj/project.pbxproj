@@ -27,9 +27,14 @@
 		2BE43D05154A070700317EFE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9E52370687AE9C00738FA5 /* AudioToolbox.framework */; };
 		2BE43D06154A070700317EFE /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9E52380687AE9C00738FA5 /* AudioUnit.framework */; };
 		2BE43D07154A070700317EFE /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9E52390687AE9C00738FA5 /* CoreAudio.framework */; };
+		73A2FFF51918067E008A012B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73A2FFF41918067E008A012B /* AudioUnit.framework */; };
+		73A2FFF719180684008A012B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73A2FFF619180684008A012B /* AudioToolbox.framework */; };
+		73A2FFF919180747008A012B /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73A2FFF819180747008A012B /* CoreAudioKit.framework */; };
+		73A2FFFB19180DC8008A012B /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73A2FFFA19180DC8008A012B /* CoreAudio.framework */; };
+		73A2FFFD19193663008A012B /* AudioVideoBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73A2FFFC19193663008A012B /* AudioVideoBridging.framework */; };
+		73A2FFFF19193AD8008A012B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73A2FFFE19193AD8008A012B /* AVFoundation.framework */; };
 		8B9E523A0687AE9C00738FA5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9E52370687AE9C00738FA5 /* AudioToolbox.framework */; };
 		8B9E523B0687AE9C00738FA5 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9E52380687AE9C00738FA5 /* AudioUnit.framework */; };
-		8B9E523C0687AE9C00738FA5 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9E52390687AE9C00738FA5 /* CoreAudio.framework */; };
 		8B9E54A20687B3BC00738FA5 /* AudioDeviceList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B9E54A00687B3BC00738FA5 /* AudioDeviceList.cpp */; };
 		8B9E54A30687B3BC00738FA5 /* AudioDeviceList.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B9E54A10687B3BC00738FA5 /* AudioDeviceList.h */; };
 		8B9E54B30687B59800738FA5 /* CAPlayThroughController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B9E54B10687B59800738FA5 /* CAPlayThroughController.h */; };
@@ -63,6 +68,12 @@
 		2B9BE3BE17E7E5C200927DE6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2BD33B6B17E7E7640057C926 /* ReadMe.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		2BE43D0C154A070700317EFE /* CAPlayThrough.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAPlayThrough.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		73A2FFF41918067E008A012B /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		73A2FFF619180684008A012B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		73A2FFF819180747008A012B /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		73A2FFFA19180DC8008A012B /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		73A2FFFC19193663008A012B /* AudioVideoBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioVideoBridging.framework; path = System/Library/Frameworks/AudioVideoBridging.framework; sourceTree = SDKROOT; };
+		73A2FFFE19193AD8008A012B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8B9E52370687AE9C00738FA5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		8B9E52380687AE9C00738FA5 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
 		8B9E52390687AE9C00738FA5 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
@@ -71,7 +82,7 @@
 		8B9E54B10687B59800738FA5 /* CAPlayThroughController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAPlayThroughController.h; sourceTree = "<group>"; };
 		8B9E54B20687B59800738FA5 /* CAPlayThroughController.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = CAPlayThroughController.mm; sourceTree = "<group>"; };
 		8B9E54CD0687B6EB00738FA5 /* CAPlayThrough.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAPlayThrough.h; sourceTree = "<group>"; };
-		8B9E54CE0687B6EB00738FA5 /* CAPlayThrough.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CAPlayThrough.cpp; sourceTree = "<group>"; };
+		8B9E54CE0687B6EB00738FA5 /* CAPlayThrough.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPlayThrough.cpp; sourceTree = "<group>"; };
 		8B9E54DC0687B72500738FA5 /* AudioDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = AudioDevice.cpp; sourceTree = "<group>"; };
 		8B9E54DD0687B72500738FA5 /* AudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AudioDevice.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -96,10 +107,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73A2FFFF19193AD8008A012B /* AVFoundation.framework in Frameworks */,
+				73A2FFFD19193663008A012B /* AudioVideoBridging.framework in Frameworks */,
+				73A2FFFB19180DC8008A012B /* CoreAudio.framework in Frameworks */,
+				73A2FFF919180747008A012B /* CoreAudioKit.framework in Frameworks */,
+				73A2FFF719180684008A012B /* AudioToolbox.framework in Frameworks */,
+				73A2FFF51918067E008A012B /* AudioUnit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				8B9E523A0687AE9C00738FA5 /* AudioToolbox.framework in Frameworks */,
 				8B9E523B0687AE9C00738FA5 /* AudioUnit.framework in Frameworks */,
-				8B9E523C0687AE9C00738FA5 /* CoreAudio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +204,12 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73A2FFFE19193AD8008A012B /* AVFoundation.framework */,
+				73A2FFFC19193663008A012B /* AudioVideoBridging.framework */,
+				73A2FFFA19180DC8008A012B /* CoreAudio.framework */,
+				73A2FFF819180747008A012B /* CoreAudioKit.framework */,
+				73A2FFF619180684008A012B /* AudioToolbox.framework */,
+				73A2FFF41918067E008A012B /* AudioUnit.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
